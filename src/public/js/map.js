@@ -105,7 +105,7 @@ async function setMap(arr) {
             // return L.marker(latlng, { icon: squareAndParkIcon });
           },
         });
-        var Alamo_blanco = L.geoJSON(treesData, {
+        var alamo_blanco = L.geoJSON(treesData, {
           onEachFeature: onEachFeature,
           pointToLayer: function (feature, latlng) {
             if (
@@ -119,7 +119,7 @@ async function setMap(arr) {
             // return L.marker(latlng, { icon: squareAndParkIcon });
           },
         });
-        var Araucaria_australiana = L.geoJSON(treesData, {
+        var araucaria_australiana = L.geoJSON(treesData, {
           onEachFeature: onEachFeature,
           pointToLayer: function (feature, latlng) {
             if (
@@ -377,10 +377,10 @@ async function setMap(arr) {
         var overLayers = {
           aligustrina: aligustrina,
           tipa: tipa,
-          "tilo_norteno":tilo_norteno,
+          "tilo norteno":tilo_norteno,
           sofora,
           "pino australiano":  pino_australiano,
-          "pezuña_de_buey": pezuña_de_buey,
+          "pezuña de buey": pezuña_de_buey,
           palta,
           olivo,
           naranjo,
@@ -393,8 +393,8 @@ async function setMap(arr) {
           ceibo,
           "arce tridente":arce_tridente,
           "arce negundo": arce_negundo,
-          "alamo blanco": Alamo_blanco,
-          "araucaria australiana": Araucaria_australiana
+          "alamo blanco": alamo_blanco,
+          "araucaria australiana": araucaria_australiana
 
         };
 

@@ -12,6 +12,7 @@
 /build
 
 # misc
+arbolado-publico-lineal-2017-2018.geojson
 .env
 .DS_Store
 .env.local
