@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="/img/desarrollo-i.jpeg">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Mapa de Lanús interactivo desarrollado por el Instituto de políticas públicas Desarrollo i">
+    <meta name="keywords" content="mapa, mapa lanus, mapa interactivo de Lanús"/>
+    <meta name="author" content="The Division Code" />
+    <meta name="copyright" content="Desarrollo i" />
+    
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css"
+        integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ=="
+        crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js"
+        integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ=="
+        crossorigin=""></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css"
+        integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ=="
+        crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js"
+        integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ=="
+        crossorigin=""></script>
+    <script src='https://api.mapbox.com/mapbox-gl-js/v2.8.1/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v2.8.1/mapbox-gl.css' rel='stylesheet' />
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-TCTKEFSV85"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-TCTKEFSV85');
+</script>
+
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        #map {
+            width: 100vw;
+            height: 100vh;
+        }
+
+        .loader-wrapper {
+            --line-width: 5px;
+            --curtain-color: #f1faee;
+            --outer-line-color: #a8dadc;
+            --middle-line-color: #457b9d;
+            --inner-line-color: #1d3557;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1000;
+        }
+
+        .loader {
+            display: block;
+            position: relative;
+            top: 50%;
+            left: 50%;
+            /*   transform: translate(-50%, -50%); */
+            width: 150px;
+            height: 150px;
+            margin: -75px 0 0 -75px;
+            border: var(--line-width) solid transparent;
+            border-top-color: var(--outer-line-color);
+            border-radius: 100%;
+            -webkit-animation: spin 2s linear infinite;
+            animation: spin 2s linear infinite;
+            z-index: 1001;
+        }
+
+        .loader:before {
+            content: "";
+            position: absolute;
+            top: 4px;
+            left: 4px;
+            right: 4px;
+            bottom: 4px;
+            border: var(--line-width) solid transparent;
+            border-top-color: var(--inner-line-color);
+            border-radius: 100%;
+            -webkit-animation: spin 3s linear infinite;
+            animation: spin 3s linear infinite;
+        }
+
+        .loader:after {
+            content: "";
+            position: absolute;
+            top: 14px;
+            left: 14px;
+            right: 14px;
+            bottom: 14px;
+            border: var(--line-width) solid transparent;
+            border-top-color: var(--middle-line-color);
+            border-radius: 100%;
+            -webkit-animation: spin 1.5s linear infinite;
+            animation: spin 1.5s linear infinite;
+        }
+
+        @-webkit-keyframes spin {
+            0% {
+                -webkit-transform: rotate(0deg);
+                -ms-transform: rotate(0deg);
+                transform: rotate(0deg);
+            }
+
+            100% {
+                -webkit-transform: rotate(360deg);
+                -ms-transform: rotate(360deg);
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes spin {
+            0% {
+                -webkit-transform: rotate(0deg);
+                -ms-transform: rotate(0deg);
+                transform: rotate(0deg);
+            }
+
+            100% {
+                -webkit-transform: rotate(360deg);
+                -ms-transform: rotate(360deg);
+                transform: rotate(360deg);
+            }
+        }
+
+        .loader-wrapper .loader-section {
+            position: fixed;
+            top: 0;
+            background: var(--curtain-color);
+            width: 51%;
+            height: 100%;
+            z-index: 1000;
+        }
+
+        .loader-wrapper .loader-section.section-left {
+            left: 0
+        }
+
+        .loader-wrapper .loader-section.section-right {
+            right: 0;
+        }
+
+        /* Loaded Styles */
+        .loaded .loader-wrapper .loader-section.section-left {
+            transform: translateX(-100%);
+            transition: all 0.7s 0.3s cubic-bezier(0.645, 0.045, 0.355, 1.000);
+        }
+
+        .loaded .loader-wrapper .loader-section.section-right {
+            transform: translateX(100%);
+            transition: all 0.7s 0.3s cubic-bezier(0.645, 0.045, 0.355, 1.000);
+        }
+
+        .loaded .loader {
+            opacity: 0;
+            transition: all 0.3s ease-out;
+        }
+
+        .loaded .loader-wrapper {
+            visibility: hidden;
+            transform: translateY(-100%);
+            transition: all .3s 1s ease-out;
+        }
+        .leaflet-control-container .leaflet-top, .leaflet-control-container .leaflet-bottom {
+            will-change: transform;
+}
+    </style>
+    <title>Lanus Inteligente</title>
+</head>
+
+<body>
+    <div class="loader-wrapper">
+        <div class="loader"></div>
+        <div class="loader-section section-left"></div>
+        <div class="loader-section section-right"></div>
+    </div>
+
+    <div class="map" id="map"></div>
+    <footer>
+
+        <script src="/js/map.js"></script>
+    </footer>
+
+
+</body>
+
+</html>
