@@ -28,11 +28,29 @@ let tree_data_caba_url = "/data/arbolado-publico-lineal-2017-2018.geojson";
 async function setMap(arr) {
   //let loader = `<div class="loader-wrapper"></div>`;
   //document.getElementById("map").innerHTML = loader;
-  var map = L.map("map", {
-    center: [-34.60376,  -58.38162],
-    zoom: 13,
+  // var map = L.map("map",{zoom: 18});
+  var map = L.map("map",
+
+
+function onLocationFound(e) {
+
+  // var radius = e.accuracy / 2;
+  // L.marker(e.latlng).addTo(map)
+  //   .bindPopup("You are within " + radius + " meters from this point").openPopup();
+  // L.circle(e.latlng, radius).addTo(map);
+  e.latlng ? map == L.map("map", {
+    center: [e.latlng],
+    zoom: 18,
     tap: false,
-  });
+  }) :
+  map == L.map("map", {
+    center: [-34.60376, -58.38162],
+    zoom: 18,
+    tap: false,
+  })
+}  )
+// map.on('locationfound', onLocationFound);
+// map.locate({setView: true, watch: true, maxZoom: 8});
 
   var squareAndParkIcon = new L.icon({
     iconUrl: "/img/square&Park.svg",
@@ -72,7 +90,7 @@ async function setMap(arr) {
       tileSize: 512,
       zoomOffset: -1,
       accessToken:
-        "sk.eyJ1Ijoibmljb2NhcHV0b2NhaSIsImEiOiJja3RhazVpbzcwMzJhMndvNmZpNGJtbWhrIn0.YV17IMSMs1UQFzyqqhRIdA",
+        "79ce0079-013c-4669-b426-5128efda7dc5",
       // accessToken:
       //   "sk.eyJ1Ijoibmljb2NhcHV0b2NhaSIsImEiOiJja3RhazVpbzcwMzJhMndvNmZpNGJtbWhrIn0.YV17IMSMs1UQFzyqqhRIdA",
     }
@@ -397,6 +415,21 @@ async function setMap(arr) {
           "araucaria australiana": araucaria_australiana
 
         };
+        map.locate({setView: true, maxZoom: 16});
+
+// function onLocationFound(e) {
+//  var radius = e.accuracy / 2;
+
+// L.marker(e.latlng).addTo(map)
+//  .bindPopup("Tu estas aqui, con " + radius + " metros de aproximacion").openPopup();
+
+// L.circle(e.latlng, radius).addTo(map);
+//  }
+//  function onLocationError(e) {
+//  alert(e.message);
+// }
+//  map.on('locationfound', onLocationFound);
+//  map.on('locationerror', onLocationError);
 
         // var baseMap = {
         //   // "Polígono": polygonLanus,
