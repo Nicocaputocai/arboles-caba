@@ -20,37 +20,16 @@ function onEachFeature(feature, layer) {
   }
 }
 
-let tree_data_caba_url = "/data/arbolado-publico-lineal-2017-2018.geojson";
-
-//Si deja de funcionar probar con esto
-// async function setMap(healthData) {
+let tree_data_caba_url = "https://arbin-api.divisioncode.net.ar/api/censusTrees";
 
 async function setMap(arr) {
-  //let loader = `<div class="loader-wrapper"></div>`;
-  //document.getElementById("map").innerHTML = loader;
-  // var map = L.map("map",{zoom: 18});
-  var map = L.map("map",
 
-
-function onLocationFound(e) {
-
-  // var radius = e.accuracy / 2;
-  // L.marker(e.latlng).addTo(map)
-  //   .bindPopup("You are within " + radius + " meters from this point").openPopup();
-  // L.circle(e.latlng, radius).addTo(map);
-  e.latlng ? map == L.map("map", {
-    center: [e.latlng],
-    zoom: 18,
+  var map = L.map("map", {
+    center: [-34.7033363,-58.3953235],
+    zoom: 13,
     tap: false,
-  }) :
-  map == L.map("map", {
-    center: [-34.60376, -58.38162],
-    zoom: 18,
-    tap: false,
-  })
-}  )
-// map.on('locationfound', onLocationFound);
-// map.locate({setView: true, watch: true, maxZoom: 8});
+  });
+  // map.locate({setView: true, maxZoom: 18});
 
   var squareAndParkIcon = new L.icon({
     iconUrl: "/img/square&Park.svg",
@@ -90,7 +69,7 @@ function onLocationFound(e) {
       tileSize: 512,
       zoomOffset: -1,
       accessToken:
-        "79ce0079-013c-4669-b426-5128efda7dc5",
+        "sk.eyJ1Ijoibmljb2NhcHV0b2NhaSIsImEiOiJja3RhazVpbzcwMzJhMndvNmZpNGJtbWhrIn0.YV17IMSMs1UQFzyqqhRIdA",
       // accessToken:
       //   "sk.eyJ1Ijoibmljb2NhcHV0b2NhaSIsImEiOiJja3RhazVpbzcwMzJhMndvNmZpNGJtbWhrIn0.YV17IMSMs1UQFzyqqhRIdA",
     }
@@ -109,6 +88,14 @@ function onLocationFound(e) {
         treesData,
       ]) => {
 
+        var Todos = L.geoJSON(treesData, {
+          onEachFeature: onEachFeature,
+          pointToLayer: function (feature, latlng) {
+
+              return L.marker(latlng, { icon: squareAndParkIcon });
+            }
+        });
+
         var aligustrina = L.geoJSON(treesData, {
           onEachFeature: onEachFeature,
           pointToLayer: function (feature, latlng) {
@@ -120,9 +107,9 @@ function onLocationFound(e) {
               return ""
             }
 
-            // return L.marker(latlng, { icon: squareAndParkIcon });
           },
         });
+
         var alamo_blanco = L.geoJSON(treesData, {
           onEachFeature: onEachFeature,
           pointToLayer: function (feature, latlng) {
@@ -134,7 +121,6 @@ function onLocationFound(e) {
               return ""
             }
 
-            // return L.marker(latlng, { icon: squareAndParkIcon });
           },
         });
         var araucaria_australiana = L.geoJSON(treesData, {
@@ -148,7 +134,6 @@ function onLocationFound(e) {
               return ""
             }
 
-            // return L.marker(latlng, { icon: squareAndParkIcon });
           },
         });
         var arce_negundo = L.geoJSON(treesData, {
@@ -162,7 +147,6 @@ function onLocationFound(e) {
               return ""
             }
 
-            // return L.marker(latlng, { icon: squareAndParkIcon });
           },
         });
         var arce_tridente = L.geoJSON(treesData, {
@@ -176,7 +160,6 @@ function onLocationFound(e) {
               return ""
             }
 
-            // return L.marker(latlng, { icon: squareAndParkIcon });
           },
         });
         var ceibo = L.geoJSON(treesData, {
@@ -190,7 +173,6 @@ function onLocationFound(e) {
               return ""
             }
 
-            // return L.marker(latlng, { icon: squareAndParkIcon });
           },
         });
         var crespon = L.geoJSON(treesData, {
@@ -204,7 +186,6 @@ function onLocationFound(e) {
               return ""
             }
 
-            // return L.marker(latlng, { icon: squareAndParkIcon });
           },
         });
         var espinillo = L.geoJSON(treesData, {
@@ -218,7 +199,6 @@ function onLocationFound(e) {
               return ""
             }
 
-            // return L.marker(latlng, { icon: squareAndParkIcon });
           },
         });
         var falsa_acacia = L.geoJSON(treesData, {
@@ -232,7 +212,6 @@ function onLocationFound(e) {
               return ""
             }
 
-            // return L.marker(latlng, { icon: squareAndParkIcon });
           },
         });
         var ficus = L.geoJSON(treesData, {
@@ -245,8 +224,6 @@ function onLocationFound(e) {
             } else {
               return ""
             }
-
-            // return L.marker(latlng, { icon: squareAndParkIcon });
           },
         });
         var laurel = L.geoJSON(treesData, {
@@ -259,8 +236,6 @@ function onLocationFound(e) {
             } else {
               return ""
             }
-
-            // return L.marker(latlng, { icon: squareAndParkIcon });
           },
         });
         var liquidambar = L.geoJSON(treesData, {
@@ -273,8 +248,6 @@ function onLocationFound(e) {
             } else {
               return ""
             }
-
-            // return L.marker(latlng, { icon: squareAndParkIcon });
           }
         });
         var naranjo = L.geoJSON(treesData, {
@@ -287,8 +260,6 @@ function onLocationFound(e) {
             } else {
               return ""
             }
-
-            // return L.marker(latlng, { icon: squareAndParkIcon });
           },
         });
         var olivo = L.geoJSON(treesData, {
@@ -301,8 +272,6 @@ function onLocationFound(e) {
             } else {
               return ""
             }
-
-            // return L.marker(latlng, { icon: squareAndParkIcon });
           },
         });
         var palta = L.geoJSON(treesData, {
@@ -315,8 +284,6 @@ function onLocationFound(e) {
             } else {
               return ""
             }
-
-            // return L.marker(latlng, { icon: squareAndParkIcon });
           },
         });
         var pezuña_de_buey = L.geoJSON(treesData, {
@@ -329,8 +296,6 @@ function onLocationFound(e) {
             } else {
               return ""
             }
-
-            // return L.marker(latlng, { icon: squareAndParkIcon });
           },
         });
         var pino_australiano = L.geoJSON(treesData, {
@@ -343,8 +308,6 @@ function onLocationFound(e) {
             } else {
               return ""
             }
-
-            // return L.marker(latlng, { icon: squareAndParkIcon });
           },
         });
         var sofora = L.geoJSON(treesData, {
@@ -357,8 +320,6 @@ function onLocationFound(e) {
             } else {
               return ""
             }
-
-            // return L.marker(latlng, { icon: squareAndParkIcon });
           },
         });
         var tilo_norteno = L.geoJSON(treesData, {
@@ -371,8 +332,6 @@ function onLocationFound(e) {
             } else {
               return ""
             }
-
-            // return L.marker(latlng, { icon: squareAndParkIcon });
           },
         });
 
@@ -386,59 +345,16 @@ function onLocationFound(e) {
             } else {
               return ""
             }
-
-            // return L.marker(latlng, { icon: squareAndParkIcon });
           },
         });
 
-
         var overLayers = {
-          aligustrina: aligustrina,
-          tipa: tipa,
-          "tilo norteno":tilo_norteno,
-          sofora,
-          "pino australiano":  pino_australiano,
-          "pezuña de buey": pezuña_de_buey,
-          palta,
-          olivo,
-          naranjo,
-          liquidambar,
-          laurel,
-          ficus,
-          "falsa acacia": falsa_acacia,
-          espinillo,
-          crespon,
-          ceibo,
-          "arce tridente":arce_tridente,
-          "arce negundo": arce_negundo,
-          "alamo blanco": alamo_blanco,
-          "araucaria australiana": araucaria_australiana
-
+          Todos
         };
-        map.locate({setView: true, maxZoom: 16});
 
-// function onLocationFound(e) {
-//  var radius = e.accuracy / 2;
 
-// L.marker(e.latlng).addTo(map)
-//  .bindPopup("Tu estas aqui, con " + radius + " metros de aproximacion").openPopup();
 
-// L.circle(e.latlng, radius).addTo(map);
-//  }
-//  function onLocationError(e) {
-//  alert(e.message);
-// }
-//  map.on('locationfound', onLocationFound);
-//  map.on('locationerror', onLocationError);
-
-        // var baseMap = {
-        //   // "Polígono": polygonLanus,
-        //   Barrios: districtsLanus,
-        //   // "Circuitos Electorales": circuitLanus,
-        //   Localidades: LocationsLanus,
-        // };
         L.control.layers(overLayers).addTo(map);
-        // trees.addTo(map)
       }
     );
 
